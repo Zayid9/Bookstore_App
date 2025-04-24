@@ -20,8 +20,8 @@ export default function Signup() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
-
-  const { user, isLoading, register} = useAuthStore();
+  
+  const { user, isLoading, register, token} = useAuthStore();
 
   const router = useRouter();
 
@@ -34,6 +34,9 @@ export default function Signup() {
     }
   };
 
+  console.log(user)
+  console.log(token)
+  
   return (
     <KeyboardAvoidingView
       style={{ flex: 1 }}
@@ -106,7 +109,7 @@ export default function Signup() {
                   placeholder="******"
                   placeholderTextColor={COLORS.placeholderText}
                   value={password}
-                  onChange={setPassword}
+                  onChangeText={setPassword}
                   secureTextEntry={!showPassword}
                 />
                 <TouchableOpacity

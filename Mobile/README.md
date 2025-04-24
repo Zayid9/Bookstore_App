@@ -1,8 +1,17 @@
-# Welcome to your Expo app 👋
+# Bookstore Mobile App 📚
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+A React Native mobile application for the Bookstore platform, built with Expo.
 
-## Get started
+## Features
+
+- Modern UI/UX Design
+- User Authentication
+- File-based Routing with Expo Router
+- State Management with Zustand
+- Form Validation
+- Error Handling
+
+## Getting Started
 
 1. Install dependencies
 
@@ -10,41 +19,62 @@ This is an [Expo](https://expo.dev) project created with [`create-expo-app`](htt
    npm install
    ```
 
-2. Start the app
+2. Update API Configuration
 
-   ```bash
-    npx expo start
+   Open `store/authStore.js` and update the API endpoint with your local IP address:
+   ```javascript
+   const API_URL = 'http://YOUR_LOCAL_IP:3000';
    ```
 
-In the output, you'll find options to open the app in a
+3. Start the app
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+   ```bash
+   npx expo start
+   ```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+   This will show a QR code and options to run the app on:
+   - Android Emulator
+   - iOS Simulator
+   - Physical device via Expo Go app
 
-## Get a fresh project
+## Project Structure
 
-When you're ready, run:
-
-```bash
-npm run reset-project
+```
+├── app/                  # Main application code
+│   ├── (auth)/          # Authentication screens
+│   │   ├── login.jsx    # Login screen
+│   │   └── signup.jsx   # Signup screen
+│   └── index.js         # Entry point
+├── assets/              # Static assets and styles
+├── components/          # Reusable components
+├── constants/           # App constants
+└── store/              # State management
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+## State Management
 
-## Learn more
+We use Zustand for state management. The main stores are:
+- `authStore.js`: Handles user authentication state and API calls
 
-To learn more about developing your project with Expo, look at the following resources:
+## Development
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+- The app uses Expo's file-based routing system
+- Styles are organized in the `assets/styles` directory
+- Constants (colors, etc.) are in the `constants` directory
 
-## Join the community
+## Troubleshooting
 
-Join our community of developers creating universal apps.
+1. Network Issues
+   - Ensure your mobile device is on the same network as your development machine
+   - Check that the API endpoint in `authStore.js` matches your local IP address
+   - Verify the backend server is running
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+2. Expo Issues
+   - Clear expo cache: `expo start -c`
+   - Rebuild: `expo start --no-dev --minify`
+
+## Learn More
+
+- [Expo Documentation](https://docs.expo.dev/)
+- [React Native Documentation](https://reactnative.dev/)
+- [Zustand Documentation](https://github.com/pmndrs/zustand)
