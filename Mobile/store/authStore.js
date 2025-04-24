@@ -12,7 +12,8 @@ export const useAuthStore = create((set) => ({
         try {
             // const response = await fetch('https://localhost:3000/api/auth/register', {
             // const response = await fetch('http://192.168.100.35:3000/api/auth/register'
-            const response = await fetch('http://192.168.137.1:3000/api/auth/register', {
+            // const response = await fetch('http://192.168.137.1:3000/api/auth/register',
+            const response = await fetch('https://bookstore-app-t1qt.onrender.com/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
