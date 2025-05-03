@@ -16,7 +16,7 @@ import Loader from "../../components/Loader";
 
 // Some delay to simulate loading
 // and to prevent too many requests in a short time
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+export const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default function Home() {
   const { token } = useAuthStore();

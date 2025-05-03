@@ -7,20 +7,13 @@ import { formatMemberSince } from '../lib/utils'
 export default function ProfileHeader() {
     const { user } = useAuthStore()
 
-    // if (!user) {
-    //     return (
-    //         <View style={styles.profileHeader}>
-    //             <Text style={styles.username}>Loading...</Text>
-    //         </View>
-    //     )
-    // }
     if (!user) return null
 
     return (
         <View style={styles.profileHeader}>
             <Image
                 source={{ uri: user.profileImage }}
-                style={styles.profileImage}
+                style={styles.profileImage} 
             />
             <View style={styles.profileInfo}>
                 <Text style={styles.username}>{user.username}</Text>
