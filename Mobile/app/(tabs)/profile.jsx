@@ -66,7 +66,7 @@ export default function Profile() {
         return;
       }
 
-      const response = await fetch(`${API_URL}/books`, {
+      const response = await fetch(`${API_URL}/books/recommended`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -84,9 +84,9 @@ export default function Profile() {
         }
       }
 
-      // Check if data.books exists and is an array
-      if (data && Array.isArray(data.books)) {
-        setBooks(data.books);
+      // The recommended endpoint returns the books array directly
+      if (Array.isArray(data)) {
+        setBooks(data);
       } else {
         throw new Error('Invalid data format');
       }

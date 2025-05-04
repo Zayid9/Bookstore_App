@@ -6,15 +6,11 @@ export const useAuthStore = create((set) => ({
     user: null,
     token: null,
     isLoading: false,
+    isCheckingAuth: true,
 
     register: async (username, email, password) => {
-
         set({ isLoading: true });
         try {
-            // const response = await fetch('https://localhost:3000/api/auth/register', {
-            // const response = await fetch('http://192.168.100.35:3000/api/auth/register'
-            // const response = await fetch('http://192.168.137.1:3000/api/auth/register',
-            // const response = await fetch('https://bookstore-app-t1qt.onrender.com/api/auth/register', {
             const response = await fetch(`${API_URL}/auth/register`, {
                 method: 'POST',
                 headers: {
@@ -25,7 +21,7 @@ export const useAuthStore = create((set) => ({
                     email,
                     password,
                 }),
-            })
+            });
     
             const data = await response.json();
             if (!response.ok) {
@@ -35,7 +31,12 @@ export const useAuthStore = create((set) => ({
             await AsyncStorage.setItem('user', JSON.stringify(data.user));
             await AsyncStorage.setItem('token', data.token);
 
-            set({ token: data.token, user: data.user, isLoading: false });
+            set({ 
+                token: data.token, 
+                user: data.user, 
+                isLoading: false,
+                isCheckingAuth: false 
+            });
 
             return {
                 success: true,
@@ -43,7 +44,7 @@ export const useAuthStore = create((set) => ({
             }
 
         } catch (error) {
-            set({ isLoading: false });
+            set({ isLoading: false, isCheckingAuth: false });
             return {
                 success: false,
                 error: error.message || 'Something went wrong!',
@@ -54,7 +55,6 @@ export const useAuthStore = create((set) => ({
     login: async (email, password) => {
         set({ isLoading: true });
         try {
-            // const response = await fetch('https://bookstore-app-t1qt.onrender.com/api/auth/login', {
             const response = await fetch(`${API_URL}/auth/login`, {
                 method: 'POST',
                 headers: {
@@ -69,12 +69,17 @@ export const useAuthStore = create((set) => ({
             const data = await response.json();
             if (!response.ok) {
                 throw new Error(data.message || 'Something went wrong!');
-            };
+            }
 
             await AsyncStorage.setItem('user', JSON.stringify(data.user));
             await AsyncStorage.setItem('token', data.token);
 
-            set({ token: data.token, user: data.user, isLoading: false });
+            set({ 
+                token: data.token, 
+                user: data.user, 
+                isLoading: false,
+                isCheckingAuth: false 
+            });
 
             return {
                 success: true,
@@ -82,37 +87,60 @@ export const useAuthStore = create((set) => ({
             }
             
         } catch (error) {
-            set({ isLoading: false });
+            set({ isLoading: false, isCheckingAuth: false });
             return {
                 success: false,
                 error: error.message || 'Something went wrong!',
             }
-            
         }
     },
 
     checkAuth: async () => {
+        set({ isCheckingAuth: true });
         try {
             const token = await AsyncStorage.getItem('token');
             const userJson = await AsyncStorage.getItem('user');
-
             const user = userJson ? JSON.parse(userJson) : null;
-
-            set({ token, user });
             
+            set({ 
+                token, 
+                user,
+                isCheckingAuth: false 
+            });
         } catch (error) {
             console.log("Auth Check Failed", error);
+            set({ 
+                token: null, 
+                user: null,
+                isCheckingAuth: false 
+            });
         }
     }, 
 
     logout: async () => {
+        set({ isLoading: true });
         try {
             await AsyncStorage.removeItem('token');
             await AsyncStorage.removeItem('user');
-            set({ token: null, user: null });
+            
+            set({ 
+                token: null, 
+                user: null, 
+                isLoading: false,
+                isCheckingAuth: false 
+            });
+
+            return {
+                success: true,
+                message: 'Logout successful!'
+            };
         } catch (error) {
             console.log("Logout Failed", error);
+            set({ isLoading: false, isCheckingAuth: false });
+            return {
+                success: false,
+                error: error.message || 'Logout failed!'
+            };
         }
     },
-
 }));
